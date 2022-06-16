@@ -5,12 +5,12 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 <template>
   <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+    </nav>
   </header>
-
+  <p>Hello Vue3</p>
   <RouterView />
 </template>
 
