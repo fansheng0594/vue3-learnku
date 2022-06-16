@@ -21,5 +21,25 @@ module.exports = {
         "plugin:cypress/recommended"
       ]
     }
-  ]
+  ],
+  "rules": {
+    // "vue/max-len": ["error", {
+    //   "ignorePattern": 'd="([\\s\\S]*?)"'
+    // }]
+    // "vue/max-len": ["error", {
+    //   "code": 80,
+    //   "template": 80,
+    //   "tabWidth": 2,
+    //   "comments": 80,
+    //   "ignorePattern": "d=\"([\\s\\S]*?)\"",
+    //   "ignoreComments": false,
+    //   "ignoreTrailingComments": false,
+    //   "ignoreUrls": false,
+    //   "ignoreStrings": false,
+    //   "ignoreTemplateLiterals": false,
+    //   "ignoreRegExpLiterals": false,
+    //   "ignoreHTMLAttributeValues": false,
+    //   "ignoreHTMLTextContents": false,
+    // }]
+  }
 }
