@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import * as heroIcons from "@heroicons/vue/solid";
-import {
-  ChevronDownIcon,
-  MenuIcon,
-  PencilIcon,
-  DuplicateIcon,
-} from "@heroicons/vue/solid";
+import { ChevronDownIcon, MenuIcon } from "@heroicons/vue/solid";
 
 const logo = ref({
   title: "Vue3",
 });
 
-const navList = ref([
+interface Item {
+  name: string;
+  url: string;
+  icon: string;
+}
+
+const navList = ref<Item[]>([
   { name: "社区", url: "/community", icon: "HomeIcon" },
   { name: "头条", url: "/hot", icon: "FireIcon" },
   { name: "问答", url: "/questions", icon: "ChatAlt2Icon" },
@@ -30,6 +31,7 @@ const activeIndex = ref(0);
 function activeClass(index: number) {
   return { "bg-gray-200": activeIndex.value === index };
 }
+
 
 function changeNav(index: number) {
   activeIndex.value = index;
