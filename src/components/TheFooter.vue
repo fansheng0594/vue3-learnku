@@ -14,11 +14,11 @@ import { faWeixin, faWeibo } from "@fortawesome/free-brands-svg-icons";
 /* add icons to the library */
 library.add(faEnvelope, faWeixin, faWeibo, faThumbsUp, faGlobe);
 
-const vTitle = {
-  mounted: (el: Event) => {
-    // console.log(el);
-  },
-};
+// const vTitle = {
+//   mounted: (el: Event) => {
+//     // console.log(el);
+//   },
+// };
 
 // function mouseHover(event) {
 //   // console.log(event);
@@ -115,8 +115,6 @@ const footList = ref({
 <template>
   <div class="flex flex-col space-y-12 lg:space-y-0 lg:flex-row items-center lg:items-start justify-between px-20 px-8 py-6 bg-gray-100 text-gray-600">
     <div class="site-info flex flex-col space-y-4 text-center lg:text-left">
-      <!--      <input type="text" v-focus/>-->
-      <a href="#" v-focus style="{background-color: #2c3e50}">hello directive</a>
       <p class="font-medium">{{ footList.description }}</p>
       <div class="contacts flex space-x-3 justify-center lg:justify-start">
         <a
@@ -142,7 +140,6 @@ const footList = ref({
         v-for="(sponsorItem, index) in footList.sponsor.list"
         :key="index"
         class="block"
-        v-title
       >
         <img class="h-5" :src="sponsorItem.logo" :alt="sponsorItem.title" />
       </a>
