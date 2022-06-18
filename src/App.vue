@@ -5,17 +5,11 @@ import TheFooter from "@/components/TheFooter.vue";
 </script>
 
 <template>
-  <header>
-    <TheHeader />
-<!--    <nav>-->
-<!--      <RouterLink to="/">Home</RouterLink>-->
-<!--      <RouterLink to="/about">About</RouterLink>-->
-<!--    </nav>-->
-  </header>
-  <p>Hello Vue3</p>
+  <TheHeader />
+  <div id="main-container" class="min-h-screen bg-gray-200">
+    <RouterView />
+  </div>
   <TheFooter />
-  <RouterView />
 </template>
 
-<style>
-</style>
+<style></style>

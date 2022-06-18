@@ -113,7 +113,7 @@ const footList = ref({
 </script>
 
 <template>
-  <div class="flex flex-col space-y-12 lg:space-y-0 lg:flex-row items-center lg:items-start justify-between px-20 px-8 py-6 bg-gray-100 text-gray-600">
+  <div class="flex flex-col space-y-12 lg:space-y-0 lg:flex-row items-center lg:items-start justify-between px-20 px-8 py-6 text-gray-600">
     <div class="site-info flex flex-col space-y-4 text-center lg:text-left">
       <p class="font-medium">{{ footList.description }}</p>
       <div class="contacts flex space-x-3 justify-center lg:justify-start">
