@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { vValidator, validates } from "@/directives/Validator.vue";
 import ThumbNail from "@/components/ThumbNail.vue";
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
+import Cookies from "js-cookie";
 
 import axios from "axios";
 
@@ -21,6 +22,7 @@ const apiFetch = axios.create({
   withCredentials: true,
   headers: {
     Accept: "application/json",
+    "X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN"),
   },
   maxRedirects: 0,
 });
@@ -54,7 +56,6 @@ function register() {
             errorMessages.value.push(err);
           }
         }
-
       });
   });
 }
