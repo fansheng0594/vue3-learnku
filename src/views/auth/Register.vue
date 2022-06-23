@@ -181,7 +181,7 @@ function getCaptureStr(data: string) {
         />
         <ThumbNail
           class="p-2 rounded-lg cursor-pointer"
-          :count="2"
+          :count="4"
           @capture="getCaptureStr"
           ref="thumbnailEl"
         />
