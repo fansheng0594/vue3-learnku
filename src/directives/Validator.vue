@@ -80,7 +80,7 @@ export const vValidator = {
           return true;
         }
         const event = new Event("blur");
-        if (rule.startsWith("confirmed_")) {
+        if (rule.endsWith("_confirmation")) {
           compareElement.dispatchEvent(event);
           return true;
         }

@@ -18,9 +18,8 @@ function getRandomIntInclusive(min: number, max: number) {
 const str = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
 let capture = ref<string[]>([]);
 const captureStr = ref("");
-changeCapture();
 
-function changeCapture() {
+const changeCapture = () => {
   capture.value = [];
   for (let i = 0; i < props.count; i++) {
     const random = getRandomIntInclusive(0, str.length - 1);
@@ -29,7 +28,8 @@ function changeCapture() {
   }
   captureStr.value = capture.value.join("").toLowerCase();
   emit("capture", captureStr.value);
-}
+};
+changeCapture();
 </script>
 
 <template>

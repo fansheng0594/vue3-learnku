@@ -1,23 +1,62 @@
 <script setup lang="ts">
 import { vValidator, validates } from "@/directives/Validator.vue";
 import ThumbNail from "@/components/ThumbNail.vue";
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 
+import axios from "axios";
+
+const username = ref("");
+const email = ref("");
+const password = ref("");
+const password_confirmation = ref("");
 const thumbnail = ref("");
 const realThumbnail = ref("");
-const errorMessage = ref("");
+const errorMessages = ref<string[]>([]);
+
+// TODO refresh thumbnail
+const thumbnailEl = ref(null);
+
+const apiFetch = axios.create({
+  baseURL: "http://localhost:8000/",
+  withCredentials: true,
+  headers: {
+    Accept: "application/json",
+  },
+  maxRedirects: 0,
+});
 function register() {
+  errorMessages.value = [];
   if (thumbnail.value.toLowerCase() !== realThumbnail.value) {
-    errorMessage.value = "thumbnail fail";
+    errorMessages.value.push("thumbnail fail");
     return;
   }
   const validateResult = Object.values(validates).every((val) => val);
   if (!validateResult) {
-    errorMessage.value = "input fail";
+    errorMessages.value.push("input fail");
     return;
   }
-  errorMessage.value = "";
 
+  apiFetch.get("sanctum/csrf-cookie").then(() => {
+    apiFetch
+      .post("api/register", {
+        name: username.value,
+        email: email.value,
+        password: password.value,
+        password_confirmation: password_confirmation.value,
+      })
+      .then(() => {
+        window.location.replace("/");
+      })
+      .catch((error) => {
+        const errors = error.response.data.errors;
+        for (const attr in errors) {
+          for (const err of errors[attr]) {
+            errorMessages.value.push(err);
+          }
+        }
+
+      });
+  });
 }
 
 function getCaptureStr(data: string) {
@@ -33,10 +72,39 @@ function getCaptureStr(data: string) {
     @submit.prevent="register"
   >
     <div class="flex flex-col space-y-2">
-      <div class="text-red-600 text-center">{{ errorMessage }}</div>
+      <div class="error-messages">
+        <div
+          v-for="(errorMessage, index) in errorMessages"
+          :key="index"
+          class="text-red-600 text-center"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+      <label class="" for="name">Name</label>
+      <div class="flex space-x-2 items-center">
+        <input
+          v-model="username"
+          max="text"
+          name="name"
+          id="name"
+          placeholder="Name"
+          class="input w-4/6 rounded-lg border border-gray-700"
+          v-validator:required="{
+            max: {
+              rule: 255,
+              msg: 'Max size: 255',
+            },
+          }"
+        />
+        <p class="input-error hidden text-red-500"></p>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-2">
       <label class="" for="email">Email</label>
       <div class="flex space-x-2 items-center">
         <input
+          v-model="email"
           type="text"
           name="email"
           id="email"
@@ -56,6 +124,7 @@ function getCaptureStr(data: string) {
       <label class="" for="password">password</label>
       <div class="flex space-x-2 items-center">
         <input
+          v-model="password"
           type="text"
           id="password"
           name="password"
@@ -63,15 +132,15 @@ function getCaptureStr(data: string) {
           class="input w-4/6 rounded-lg border border-gray-700"
           v-validator:required="{
             min: {
-              rule: 6,
-              msg: 'Min size: 6',
+              rule: 8,
+              msg: 'Min size: 8',
             },
             max: {
               rule: 20,
               msg: 'Max size: 20',
             },
             confirmed: {
-              rule: 'confirmed_password',
+              rule: 'password_confirmation',
               msg: 'Not equal to confirmed-password',
             },
           }"
@@ -80,12 +149,13 @@ function getCaptureStr(data: string) {
       </div>
     </div>
     <div class="flex flex-col space-y-2">
-      <label class="" for="password">confirmed password</label>
+      <label class="" for="password_confirmation">confirmed password</label>
       <div class="flex space-x-2 items-center">
         <input
+          v-model="password_confirmation"
           type="text"
-          id="confirmed_password"
-          name="confirmed_password"
+          id="password_confirmation"
+          name="password_confirmation"
           placeholder="Confirm Password"
           class="input w-4/6 rounded-lg border border-gray-700"
           v-validator:required="{
@@ -110,8 +180,9 @@ function getCaptureStr(data: string) {
         />
         <ThumbNail
           class="p-2 rounded-lg cursor-pointer"
-          :count="6"
+          :count="2"
           @capture="getCaptureStr"
+          ref="thumbnailEl"
         />
         <p class="input-error hidden text-red-500"></p>
       </div>

@@ -5,10 +5,8 @@ import App from "./App.vue";
 import router from "./router";
 import "./index.css";
 
-
 /* import font awesome icon component */
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
 
 const app = createApp(App);
 
