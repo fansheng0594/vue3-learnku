@@ -3,7 +3,6 @@ import { vValidator, validates } from "@/directives/Validator.vue";
 import ThumbNail from "@/components/ThumbNail.vue";
 import { onMounted, ref } from "vue";
 import Cookies from "js-cookie";
-
 import axios from "axios";
 
 const username = ref("");
